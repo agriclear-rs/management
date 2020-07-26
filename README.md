@@ -5,7 +5,7 @@ Agriclear is an agriculture supply chain which records all the information of pl
 
 ## Installing
 
-To setup this software on your machine locally, first clone this repository to your local machine and create a folder named ‘config’ on root of this repository. You need to add three files here
+To setup this software on your machine locally, first clone this repository to your local machine and create a folder named ‘config’ on root of this repository. You need to add three files [here](https://gist.github.com/myanzik/60586564326a1d9cd77e24031d1c5799)
 
 -   Local.json
     
@@ -24,6 +24,6 @@ To start this software - run Ganache then perform the following actions:
 
 
 
-## coding style tests
+## Soding Style Tests
 
 This repository uses eslint to enforce air-bnb coding styles.   
