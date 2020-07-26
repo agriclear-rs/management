@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../_layouts/head %>
+  <link href="/css/plugins/datatables/datatables.min.css" rel="stylesheet" />
+  <script>
+    var farmerId = "<%= data.farmerId%>";
+  </script>
+</head>
+
+<body class="md-skin">
+  <% include ../_layouts/header %>
+  <div id="wrapper">
+    <% include ../_layouts/sidebar %>
+    <div id="page-wrapper" class="gray-bg">
+      <% include ../_layouts/search %>
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox">
+              <div class="ibox-title text-center">
+                <h2>
+                  Farmer Details
+                </h2>
+              </div>
+              <div id="farmerDetailsPanel" class="ibox-content" style="padding-top: 0px; min-height: auto;">
+                <form action="" method="post">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="text-center">
+                        <img src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png"
+                          class="rounded-circle" height="165px" width="155px" id="farmer_image" alt="Upload an Image"
+                          style="margin: auto;" />
+                        <div class="card-body">
+                          <div class="custom-file text-left">
+                            <input id="imageUpload" type="file" class="custom-file-input" />
+                            <label class="custom-file-label">Upload Profile Image</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="form-row">
+                        <div class="col-md-12 form-group">
+                          <strong><label for="name">Farmer Name: *</label></strong>
+                          <input type="text" name="name" required class="form-control" placeholder="Farmer Full Name" />
+                        </div>
+                        <div class="col-md-12 form-group">
+                          <strong> <label for="phone">Contact Number: *</label> </strong>
+                          <input type="text" name="phone" class="form-control" placeholder="Contact Number" required />
+                        </div>
+                        <div class="col-md-12 form-group">
+                          <strong> <label for="email">Email: </label> </strong>
+                          <input type="text" name="email" class="form-control" placeholder="Email Address" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5 form-group">
+                      <strong> <label for="website">Website:</label> </strong>
+                      <input type="text" name="website" class="form-control" placeholder="Website" />
+                    </div>
+                    <div class="col-md-7 form-group">
+                      <strong> <label for="address">Address:</label> </strong>
+                      <input type="text" name="address" class="form-control" placeholder="Address" />
+                    </div>
+                    <div class="col-md-12 form-group">
+                      <strong> <label for="image_url">Farmer Image Url:</label> </strong>
+                      <input type="text" name="image_url" class="form-control"
+                        placeholder="Farmer Image Url will show up here after uploaded" disabled />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12 col-md-offset-2 text-right">
+                      <button class="btn btn-secondary btn-md" id="btnGoBack" type="button">
+                        Go Back
+                      </button>
+                      <button class="btn btn-primary btn-md" type="submit">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox">
+              <div class="ibox-title">
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <h2>
+                      Crops Associated
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <div class="ibox-content" style="padding-top: 5px; min-height: auto;">
+                <div class="table-responsive">
+                  <table id="seed-table" class="table table-striped table-bordered table-hover" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th>Batch Number</th>
+                        <th>Crop Name</th>
+                        <th>Variety</th>
+                        <th>Plot Number</th>
+                        <th>Farmers</th>
+                        <th width="100" style="text-align: center;">Action</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% include ../_layouts/foot %>
+  <script type="text/javascript" language="javascript" src="/js/plugins/datatables/datatables.min.js"></script>
+  <script src="/js/app/farmer.details.js"></script>
+</body>
+
+</html>

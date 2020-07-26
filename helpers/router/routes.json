@@ -1,0 +1,25 @@
+{
+  "api_v1": {
+    "roles": "../../modules/role/role.routes.api",
+    "users": "../../modules/user/user.routes.api",
+    "settings": "../../modules/setting/setting.routes.api",
+    "static": "../../modules/setting/static.routes.api",
+    "my": "../../modules/user/my.routes.api",
+    "seeds": "../../modules/seed/seed.routes.api",
+    "farmers": "../../modules/farmer/farmer.routes.api",
+    "distributors": "../../modules/distributor/distributor.routes.api",
+    "farms": "../../modules/farm/farm.routes.api",
+    "comments": "../../modules/comment/comment.routes.api",
+    "knowledgebase": "../../modules/knowledgebase/knowledge.routes.api"
+  },
+  "ui": {
+    "roles": "../../modules/role/role.routes.ui",
+    "users": "../../modules/user/user.routes.ui",
+    "my": "../../modules/user/my.routes.ui",
+    "seeds": "../../modules/seed/seed.routes.ui",
+    "farmers": "../../modules/farmer/farmer.routes.ui",
+    "distributors": "../../modules/distributor/distributor.routes.ui",
+    "farms": "../../modules/farm/farm.routes.ui",
+    "knowledgebase": "../../modules/knowledgebase/knowledge.routes.ui"
+  }
+}

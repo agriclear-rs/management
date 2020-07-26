@@ -1,0 +1,30 @@
+{
+  "vendors": {
+    "entry": "./js/vendors/index.js",
+    "outputPath": "../public/js/app",
+    "outputFile": "vendors.js"
+  },
+  "js": {
+    "entry": {
+      "auth": "./js/auth/index.js",
+      "auth.passport": "./js/auth/passport.js",
+      "index": "./js/index.js",
+      "role": "./js/role/page.index.js",
+      "user": "./js/user/page.index.js",
+      "user.details": "./js/user/page.details.js",
+      "my": "./js/my/page.index.js",
+      "seed": "./js/seed/page.index.js",
+      "seed.details": "./js/seed/page.details.js",
+      "farmer": "./js/farmer/page.index.js",
+      "farmer.details": "./js/farmer/page.details.js",
+      "distributor": "./js/distributor/page.index.js",
+      "distributor.details": "./js/distributor/page.details.js",
+      "farm": "./js/farm/page.index.js",
+      "farm.details": "./js/farm/page.details.js",
+      "knowledge": "./js/knowledgebase/page.index.js",
+      "knowledge.details": "./js/knowledgebase/page.details.js",
+      "farm.add": "./js/farm/page.add.index.js"
+    },
+    "outputPath": "../public/js/app"
+  }
+}

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../_layouts/head %>
+  <link href="/css/plugins/datatables/datatables.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <style>
+    .pac-container {
+      z-index: 10000 !important;
+    }
+  </style>
+  <script></script>
+</head>
+
+<body class="md-skin">
+  <% include ../_layouts/header %>
+  <div id="wrapper">
+    <% include ../_layouts/sidebar %>
+    <div id="page-wrapper" class="gray-bg">
+      <% include ../_layouts/search %>
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="ibox">
+              <div class="ibox-title">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h2>
+                      Farm Management
+                      <small class="badge badge-warning" style="font-weight: normal;" id="txtFilter"></small>
+                    </h2>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-6">
+                    <div class="input-group row">
+                      <div class="input-group-btn">
+                        <select id="filterBy" class="col-md-10">
+                          <option></option>
+                          <option value="name">Farm Name</option>
+                          <option value="id">Farm Id</option>
+                          <option value="owner">Owner</option>
+                        </select>
+                      </div>
+                      <input type="text" class="form-control input-sm col-md-5" id="searchValue"
+                        placeholder="Search term ..." />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="/farms/add">
+                      <button id="" class="btn btn-primary">
+                        <i class="fa fa-plus-circle"></i>&nbsp;Add Farm
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="ibox-content" style="padding-top: 5px; min-height: 500px;">
+                <div class="table-responsive">
+                  <table id="farm-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th>Farm Name</th>
+                        <th>Farm Id</th>
+                        <th>Owner</th>
+                        <th>Address</th>
+                        <th>Contact No.</th>
+                        <!-- <th>Crops Grown</th> -->
+                        <th width="100" style="text-align: center;">Action</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% include ../_layouts/footer %>
+    </div>
+  </div>
+  <% include ../_layouts/foot %>
+  <script type="text/javascript" language="javascript" src="/js/plugins/datatables/datatables.min.js"></script>
+  <script type="text/javascript"
+    src="https://maps.google.com/maps/api/js?v=3&key=AIzaSyBvExzwwXB7vhWchWY57j91js1EqU7Mssc&libraries=places&callback=myMap"
+    async defer></script>
+  <script src="/js/gmap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script src="/js/app/farm.js"></script>
+</body>
+
+</html>
+
+<div id="mdlFarmAdd" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Farm</h4>
+      </div>
+      <form id="frmFarm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 row">
+              <div class="col-md-12 form-group">
+                <strong><label for="name">Farm Name: *</label></strong>
+                <input type="text" name="name" required class="form-control" placeholder="Farm Name" />
+              </div>
+              <div class="col-md-12 form-group">
+                <strong><label for="farm_id">Farm Id:</label></strong>
+                <input type="text" name="farm_id" class="form-control" placeholder="Farm Id" />
+              </div>
+              <div class="col-md-12 form-group">
+                <strong><label for="owner">Owner Name: </label></strong>
+                <input type="text" name="owner" class="form-control" placeholder="Owner's Name" />
+              </div>
+              <div class="col-md-12 form-group">
+                <strong> <label for="address">Address:</label> </strong>
+                <input type="text" id="searchLocation" name="address" class="form-control" placeholder="Address" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-12 form-group">
+                <div id="googleMap" class="google-map col-lg-12" style="position: relative; overflow: hidden;"></div>
+              </div>
+            </div>
+            <div class="col-md-4 form-group">
+              <strong><label for="contact_no">Contact No.: </label></strong>
+              <input type="text" name="contact_no" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong><label for="email">Email: </label></strong>
+              <input type="text" name="email" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong><label for="website">Website: </label></strong>
+              <input type="text" name="website" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong><label for="land_area">Land Area (sq.km): </label></strong>
+              <input type="text" name="land_area" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong> <label for="elevation">Elevation:</label> </strong>
+              <input type="text" name="elevation" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong><label for="climate_zone">Climate Zone: </label></strong>
+              <input type="text" name="climate_zone" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong> <label for="no_of_plot">Number of Plots:</label> </strong>
+              <input type="number" name="no_of_plot" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong> <label for="irrigation_sources">Sources of Irrigation:</label> </strong>
+              <input type="text" name="irrigation_sources" class="form-control" />
+            </div>
+            <div class="col-md-4 form-group">
+              <strong> <label for="crops">Crops Grown:</label> </strong>
+              <select class="form-control" id="crops" name="crops" multiple>
+                <option></option>
+              </select>
+            </div>
+            <div class="col-md-6 form-group text-center">
+              <strong>
+                <label for="any_land_risk">Are there any risks identified at site?</label>
+              </strong>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="any_land_risk" name="any_land_risk" />
+                <label class="custom-control-label" for="any_land_risk">Yes</label>
+              </div>
+            </div>
+            <div class="col-md-6 form-group text-center">
+              <strong>
+                <label for="any_monitoring_program">Any Monitoring programs implemented at farm?</label>
+              </strong>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="any_monitoring_program"
+                  name="any_monitoring_program" />
+                <label class="custom-control-label" for="any_monitoring_program">Yes</label>
+              </div>
+            </div>
+            <div class="col-md-4 risk-doc" style="display: none;">
+              <strong> <label>Choose Land Risk Document:</label> </strong>
+              <input id="land_risk_doc" type="file" />
+            </div>
+            <div class="col-md-8 form-group risk-doc" style="display: none;">
+              <strong> <label for="land_risk_doc">Land Risk Document URl:</label> </strong>
+              <input type="text" name="land_risk_doc" class="form-control"
+                placeholder="Document Url will appear here once uploaded" disabled />
+            </div>
+            <div class="col-md-4 monitor-doc" style="display: none;">
+              <strong> <label>Choose Monitoring Document:</label> </strong>
+              <input id="monitoring_doc" type="file" />
+            </div>
+            <div class="col-md-8 form-group monitor-doc" style="display: none;">
+              <strong>
+                <label for="monitoring_doc">Monitoring Program Document URl:</label>
+              </strong>
+              <input type="text" name="monitoring_doc" class="form-control"
+                placeholder="Document Url will appear here once uploaded" disabled />
+            </div>
+            <input type="text" name="longitude" id="longitude" value="" hidden />
+            <input type="text" name="latitude" id="latitude" value="" hidden />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="mdlFarmerAdd" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Farmer</h4>
+      </div>
+      <form id="frmFarmer">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="text-center">
+                <img src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png"
+                  class="rounded-circle" height="165px" width="155px" id="farmer_image" alt="Upload an Image"
+                  style="margin: auto;" />
+                <div class="card-body">
+                  <div class="custom-file text-left">
+                    <input id="imageUpload" type="file" class="custom-file-input" />
+                    <label class="custom-file-label">Upload Profile Image</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="form-row">
+                <input type="text" name="farms" id="farmsFarmer" hidden />
+                <input type="text" name="type" value="farmer" hidden />
+                <div class="col-md-12 form-group">
+                  <strong><label for="name">Farmer Name: *</label></strong>
+                  <input type="text" name="name" required class="form-control" placeholder="Farmer Full Name" />
+                </div>
+                <div class="col-md-12 form-group">
+                  <strong>
+                    <label for="phone">Contact Number: * <small>this will be used as username</small></label>
+                  </strong>
+                  <input type="text" name="phone" class="form-control" placeholder="Contact Number" required />
+                </div>
+                <div class="col-md-12 form-group">
+                  <strong> <label for="address">Address:</label> </strong>
+                  <input type="text" name="address" class="form-control" placeholder="Address" />
+                </div>
+                <div class="col-md-8 form-group">
+                  <strong>
+                    <label for="password">Password: *&nbsp;
+                      <span data-toggle="tooltip" data-placement="top"
+                        title="Password because user will be created in system. Share this and the farmer will be able to login to our system.">
+                        <i class="fa fa-info-circle fa-lg" style="color: black;"></i></span></label>
+                  </strong>
+                  <div class="input-group">
+                    <input type="text" name="password" class="form-control" placeholder="Password" required />
+                    <span class="input-group-append">
+                      <button type="button" class="btn btn-primary" id="btnGenPassword" title="Create random password">
+                        <i class="fa fa-random"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                <!-- <div class="col-md-12 form-group">
+                  <strong> <label for="email">Email: </label> </strong>
+                  <input type="text" name="email" class="form-control" placeholder="Email Address" />
+                </div> -->
+              </div>
+            </div>
+            <!-- <div class="col-md-5 form-group">
+              <strong> <label for="website">Website:</label> </strong>
+              <input type="text" name="website" class="form-control" placeholder="Website" />
+            </div> -->
+            <div class="col-md-7 form-group d-none">
+              <strong> <label for="image_url">Farmer Image Url:</label> </strong>
+              <input type="text" name="image_url" class="form-control"
+                placeholder="Farmer Image Url will show up here after uploaded" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="mdlDistributorAdd" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Distributor</h4>
+      </div>
+      <form id="frmDistributor">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="text-center">
+                <img src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png"
+                  class="rounded-circle" height="165px" width="155px" id="distributor_image" alt="Upload an Image"
+                  style="margin: auto;" />
+                <div class="card-body">
+                  <div class="custom-file text-left">
+                    <input id="imageDisUpload" type="file" class="custom-file-input" />
+                    <label class="custom-file-label">Upload Distributor Image</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="form-row">
+                <input type="text" name="farms" id="farmsDistributor" hidden />
+                <input type="text" name="type" value="distributor" hidden />
+                <div class="col-md-12 form-group">
+                  <strong><label for="name">Distributor Name: *</label></strong>
+                  <input type="text" name="name" required class="form-control" placeholder="Distributor Full Name" />
+                </div>
+                <div class="col-md-12 form-group">
+                  <strong>
+                    <label for="phone">Contact Number: * <small>this will be used as username</small></label>
+                  </strong>
+                  <input type="text" name="phone" class="form-control" placeholder="Contact Number" required />
+                </div>
+                <div class="col-md-12 form-group">
+                  <strong> <label for="email">Email: </label> </strong>
+                  <input type="text" name="email" class="form-control" placeholder="Email Address" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 form-group">
+              <strong>
+                <label for="password">Password: *&nbsp;
+                  <span data-toggle="tooltip" data-placement="top"
+                    title="Password because user will be created in system. Share this and the distributor will be able to login to our system.">
+                    <i class="fa fa-info-circle fa-lg" style="color: black;"></i></span></label>
+              </strong>
+              <div class="input-group">
+                <input type="text" name="password" class="form-control" placeholder="Password" required />
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-primary" id="btnDisGenPassword" title="Create random password">
+                    <i class="fa fa-random"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-7 form-group">
+              <strong> <label for="address">Address:</label> </strong>
+              <input type="text" name="address" class="form-control" placeholder="Address" />
+            </div>
+            <div class="col-md-5 form-group">
+              <strong> <label for="distributor_type">Distributor Type:</label> </strong>
+              <select name="distributor_type" id="distributor_type" class="form-control" style="width: 100%;" required>
+                <option disabled selected value="">Select Type</option>
+                <option value="Wholesaler">Wholesaler</option>
+                <option value="Retailer">Retailer</option>
+              </select>
+            </div>
+            <div class="col-md-7 form-group">
+              <strong> <label for="website">Website:</label> </strong>
+              <input type="text" name="website" class="form-control" placeholder="Website" />
+            </div>
+
+            <div class="col-md-12 form-group">
+              <strong> <label for="image_url">Distributor Image Url:</label> </strong>
+              <input type="text" name="image_url" class="form-control"
+                placeholder="Distributor Image Url will show up here after uploaded" disabled />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="mdlSeedAdd" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Batch</h4>
+      </div>
+      <form id="frmSeed">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="text-center">
+                <img src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png"
+                  class="rounded-circle" height="165px" width="155px" id="seed_image" alt="Upload an Image"
+                  style="margin: auto;" />
+                <div class="card-body">
+                  <div class="custom-file text-left">
+                    <input id="imageBatchUpload" type="file" class="custom-file-input" />
+                    <label class="custom-file-label">Upload Crop Image</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="form-row">
+                <input type="text" name="farms" id="farmsBatch" hidden />
+                <div class="col-md-12 form-group">
+                  <strong><label for="crop">Crop Name:</label></strong>
+                  <select class="form-control" id="cropSelect" name="crop" required>
+                    <option></option>
+                  </select>
+                </div>
+                <!-- <div class="col-md-12 form-group">
+                  <strong> <label for="image_url">Crop Image Url:</label> </strong> -->
+                <input type="text" name="image_url" class="form-control" style="display: none;"
+                  placeholder="Image Url will show up here after uploaded" disabled />
+                <!-- </div> -->
+                <div class="col-md-12 form-group">
+                  <strong><label for="crop_variety">Crop Variety:</label></strong>
+                  <select class="form-control" id="varietySelect" name="crop_variety">
+                    <option></option>
+                  </select>
+                </div>
+                <div class="col-md-12 form-group">
+                  <strong><label for="plots">Select Plot:</label></strong>
+                  <select class="form-control" id="plotSelect" name="plots" multiple>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 form-group text-center">
+              <strong>
+                <label for="is_modified">Is the used Seed Genetically Modified?</label>
+              </strong>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="is_modified" name="is_modified" />
+                <label class="custom-control-label" for="is_modified">Yes</label>
+              </div>
+            </div>
+            <div class="col-md-6 form-group text-center">
+              <strong>
+                <label for="has_quality_assurance">Does Seed have any Quality Assurance Document?</label>
+              </strong>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="has_quality_assurance"
+                  name="has_quality_assurance" />
+                <label class="custom-control-label" for="has_quality_assurance">Yes</label>
+              </div>
+            </div>
+            <div class="col-md-6 doc-upload" style="display: none;">
+              <strong> <label for="assurance_doc_url">Choose Assurance Document:</label> </strong>
+              <div class="custom-file text-left">
+                <input id="docUpload" type="file" class="custom-file-input" multiple />
+                <label class="custom-file-label">Choose Document</label>
+              </div>
+            </div>
+            <!-- <div class="col-md-6 form-group doc-upload" style="display: none;">
+              <strong> <label for="assurance_doc_url">Document Url:</label> </strong> -->
+            <input type="text" name="assurance_doc_url" class="form-control" style="display: none;"
+              placeholder="Document Url will show up here once uploaded" disabled />
+            <!-- </div> -->
+            <div class="col-md-12 row form-group" id="assurance"></div>
+            <div class="col-md-6 form-group">
+              <strong> <label for="farmer_id">Farmers:</label> </strong>
+              <div class="row">
+                <div class="col-md-12">
+                  <select name="farmer_id" id="farmer_id" class="form-control" style="width: 100%;" multiple="multiple">
+                  </select>
+                </div>
+                <!-- <div class="col-md-1" style="left: -6%;">
+                  <i class="fa fa-plus btn btn-primary" id="btnAddFarmer" title="Add Farmer"></i>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-md-6 form-group">
+              <strong> <label for="distributor_id">Distributors:</label> </strong>
+              <div class="row">
+                <div class="col-md-12">
+                  <select name="distributor_id" id="distributor_id" class="form-control" style="width: 100%;"
+                    multiple="multiple">
+                  </select>
+                </div>
+                <!-- <div class="col-md-1" style="left: -3%;">
+                  <i class="fa fa-plus btn btn-primary" id="btnAddDistributor" title="Add Distributor"></i>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <strong> <label for="comment">Comment:</label></strong>
+              <textarea type="text" name="comment" rows="2" class="form-control" placeholder="Comment"></textarea>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

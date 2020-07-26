@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title><%=title%></title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+    />
+    <link rel="stylesheet" href="/css/consumer.css" />
+    <style>
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .portrait {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <section id="timeline">
+      <h1>Hi everyone,</h1>
+      <p class="leader">
+        My name is <%-seedInfo.name%>. Let me tell you my journey from farm to your table
+      </p>
+      <div class="demo-card-wrapper">
+        <div class="demo-card demo-card--step1">
+          <div class="head">
+            <div class="number-box">
+              <span>01</span>
+            </div>
+            <h2><span class="small">Seed</span> Details</h2>
+          </div>
+          <div class="body">
+            <p>
+              I was born and raised in <%-seedInfo.farm_name%> located at
+              <%-seedInfo.farm_address%>. I looked like this:
+            </p>
+            <div class="portrait">
+              <img
+                src="<%-seedInfo.image_url%>"
+                alt="Graphic"
+                onerror="this.onerror=null;this.src='https://cdn4.iconfinder.com/data/icons/images-image-files-2/24/photo_photography_image_picture_no_disable-512.png';"
+                width="200"
+                height="240"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-card demo-card--step2">
+          <div class="head">
+            <div class="number-box">
+              <span>02</span>
+            </div>
+            <h2><span class="small">Farmer</span> Details</h2>
+          </div>
+          <div class="body">
+            <p>
+              I have been taken care by <%-seedInfo.caretaker_name%>
+            </p>
+            <img
+              src="<%-seedInfo.caretaker_image%>"
+              alt="Graphic"
+              onerror="this.onerror=null;this.src='https://cdn4.iconfinder.com/data/icons/images-image-files-2/24/photo_photography_image_picture_no_disable-512.png';"
+              width="200"
+              height="240"
+            />
+          </div>
+        </div>
+
+        <div class="demo-card demo-card--step3">
+          <div class="head">
+            <div class="number-box">
+              <span>03</span>
+            </div>
+            <h2><span class="small">Growth</span> Period</h2>
+          </div>
+          <div class="body">
+            <p>
+              During my young age, <%-seedInfo.fertilizer_added%>
+            </p>
+            <img
+              src="<%-seedInfo.fertilizer_image_url[0]%>"
+              alt="Graphic"
+              onerror="this.onerror=null;this.src='https://cdn4.iconfinder.com/data/icons/images-image-files-2/24/photo_photography_image_picture_no_disable-512.png';"
+              width="200"
+              height="240"
+            />
+          </div>
+        </div>
+
+        <div class="demo-card demo-card--step4">
+          <div class="head">
+            <div class="number-box">
+              <span>04</span>
+            </div>
+            <h2><span class="small">Growth</span> Period</h2>
+          </div>
+          <div class="body">
+            <p>
+              Similarly, <%-seedInfo.pesticide_added%>
+            </p>
+            <img
+              src="<%-seedInfo.pesticide_image_url[0]%>"
+              alt="Graphic"
+              onerror="this.onerror=null;this.src='https://cdn4.iconfinder.com/data/icons/images-image-files-2/24/photo_photography_image_picture_no_disable-512.png';"
+              width="200"
+              height="240"
+            />
+          </div>
+        </div>
+
+        <div class="demo-card demo-card--step5">
+          <div class="head">
+            <div class="number-box">
+              <span>05</span>
+            </div>
+            <h2><span class="small">Farm to</span> Market</h2>
+          </div>
+          <div class="body">
+            <p>
+              I was harvested in <%-seedInfo.days_for_harvesting%> days. and I was delivered to the
+              market by our distributor <%-seedInfo.distributor_name%>
+            </p>
+            <img
+              src="<%-seedInfo.harvested_image_url[0]%>"
+              alt="Graphic"
+              onerror="this.onerror=null;this.src='https://cdn4.iconfinder.com/data/icons/images-image-files-2/24/photo_photography_image_picture_no_disable-512.png';"
+              width="200"
+              height="240"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- partial -->
+  </body>
+</html>

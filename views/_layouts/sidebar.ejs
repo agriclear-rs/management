@@ -1,0 +1,77 @@
+<style>
+  .md-skin .nav-header {
+    background: none;
+  }
+</style>
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header" style="background-color: white !important; padding-bottom: 0px;">
+        <div class="dropdown profile-element">
+          <center>
+            <img alt="image" src="/img/logos/agriclear-leaf.png" width="37%" />
+            <h3 class="m-t font-bold text-red" style="margin-top: 24px;">Agriclear<br /></h3>
+          </center>
+        </div>
+        <div class="logo-element" style="padding-bottom: 5px;">
+          <img alt="RS" src="/img/logos/agriclear-leaf.png" height="85%" width="35%" />
+        </div>
+        <hr style="margin: 5px;" />
+      </li>
+      <li class="<% if (typeof name!='undefined' && name == 'dashboard') { %> active <% } %>">
+        <a href="/cms"><i class="fa fa-table"></i> <span class="nav-label">Dashboard</span></a>
+      </li>
+      <li id="userFarm" style="display: none;"
+        class="<% if (typeof name!='undefined' && name == 'seeds') { %> active <% } %>">
+        <a href="/seeds"><i class="fa fa-leaf"></i> <span class="nav-label">Your Batch Crops</span></a>
+      </li>
+      <!-- <li id="modMgmt" class="<% if (typeof name!='undefined' && name == 'farmMgmt') { %> active <% } %>"
+        style="display: none;">
+        <a href="#"><i class="fa fa-laptop"></i> <span class="nav-label">Manage</span><span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+          <li>
+            <a href="/farms"><i class="fa fa-globe"></i>Farms</a>
+          </li>
+          <li>
+            <a href="/farmers"><i class="fa fa-users"></i>Farmers</a>
+          </li>
+          <li>
+            <a href="/seeds"><i class="fa fa-leaf"></i>Batch Crop</a>
+          </li>
+          <li>
+            <a href="/distributors"><i class="fa fa-sitemap"></i> Distributors</a>
+          </li>
+        </ul>
+      </li> -->
+      <li class="modMgmt">
+        <a href="/farms"><i class="fa fa-globe"></i>Farm Management</a>
+      </li>
+      <li class="modMgmt">
+        <a href="/distributors"><i class="fa fa-sitemap"></i> Distributor Management</a>
+      </li>
+      <li class="modMgmt">
+        <a href="/knowledgebase"><i class="fa fa-book"></i> <span class="nav-label">Crop Knowledge Base</span></a>
+      </li>
+      <li id="mnuMgmt" class="<% if (typeof name!='undefined' && name == 'admin') { %> active <% } %>"
+        style="display: none;">
+        <a href="#"><i class="fa fa-lock"></i> <span class="nav-label">Administration</span><span
+            class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+          <li>
+            <a href="/users"><i class="fa fa-user"></i>Users</a>
+          </li>
+          <li>
+            <a href="/roles"><i class="fa fa-sitemap"></i> <span class="nav-label">Roles</span></a>
+          </li>
+          <li>
+            <a href="/settings"><i class="fa fa-cogs"></i>Settings</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a role="button" href="/logout" onclick="localStorage.clear()" class=""><i
+            class="fa fa-sign-out-alt"></i>Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>

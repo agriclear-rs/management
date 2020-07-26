@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ../_layouts/head %>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script>
+    var seedId = "<%= data.seedId%>";
+    var seedUuid = "<%= data.seedUuid%>";
+  </script>
+  <style>
+    .md-skin .nav>li.active>a {
+      background-color: #318c38;
+      color: white;
+    }
+
+    .md-skin .nav>li.active {
+      background: #318c38;
+    }
+
+    .nav-tabs>li.active>a {
+      border-bottom: none !important;
+      border-style: none !important;
+    }
+
+    .badge-outline-danger {
+      color: white;
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body class="md-skin">
+  <% include ../_layouts/header %>
+  <div id="wrapper">
+    <% include ../_layouts/sidebar %>
+    <div id="page-wrapper" class="gray-bg">
+      <% include ../_layouts/search %>
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <ul class="nav nav-tabs ">
+          <li id="seedDetails" class="active">
+            <a href="#seedContent" data-toggle="tab">
+              <h3>Batch Details</h3>
+            </a>
+          </li>
+          <li id="farmerDetails">
+            <a href="#farmerContent" data-toggle="tab">
+              <h3>
+                Farmers
+              </h3>
+            </a>
+          </li>
+          <li id="distributorDetails">
+            <a href="#distributorContent" data-toggle="tab">
+              <h3>
+                Distributors
+              </h3>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="seedContent">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="ibox">
+                  <!-- <div class="ibox-title">
+                    <h2>
+                      Batch Details
+                    </h2>
+                  </div> -->
+                  <div id="seedDetailsPanel" class="ibox-content" style="padding-top: 0px; min-height: auto;">
+                    <form action="" method="post">
+                      <div class="card" style="top: 10px;">
+                        <button class="btn" type="button" data-toggle="collapse" data-target="#basicDetails"
+                          aria-expanded="true" aria-controls="basicDetails">
+                          <div class="card-header">
+                            <div class="row">
+                              <div class="col-md-10 text-left">
+                                <h4>
+                                  Basic Details
+                                </h4>
+                              </div>
+                              <div class="col-md-2 text-right">
+                                <i class="fa fa-2x fa-caret-down"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                        <div id="basicDetails" class="collapse">
+                          <div class="card-body">
+                            <div class="col-md-12 form-group row" id="seedBasicInfo">
+                              <div class="col-md-3 text-center" style="margin-bottom: 12px;">
+                                <div id="qrcode" class="col text-center"></div>
+                                <a download="qrcode.jpeg" id="qrDownload" class="btn btn-primary btn-md" target="_blank"
+                                  style="margin-top: 15px; color: #fff;">Download QR</a>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="text-center">
+                                  <img
+                                    src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png"
+                                    class="rounded" height="165px" width="155px" id="seed_image" alt="Upload an Image"
+                                    style="margin: auto;" />
+                                  <div class="card-body">
+                                    <div class="custom-file text-left">
+                                      <input id="imageUpload" type="file" class="custom-file-input" />
+                                      <label class="custom-file-label">Add</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-row">
+                                  <div class="col-md-8 form-group">
+                                    <strong><label for="name">Crop Name:</label></strong>
+                                    <input type="text" name="name" required class="form-control"
+                                      placeholder="Crop Name" />
+                                  </div>
+                                  <div class="col-md-4 form-group">
+                                    <strong><label for="name">Batch Number:</label></strong>
+                                    <input type="text" name="batch_no" class="form-control" disabled />
+                                  </div>
+                                  <!-- <div class="col-md-12 form-group">
+                                    <strong> <label for="image_url">Seed Image Url:</label> </strong> -->
+                                  <input type="text" name="image_url" class="form-control" style="display: none;"
+                                    placeholder="Image Url will show up here after uploaded" disabled />
+                                  <!-- </div> -->
+                                  <div class="col-md-6 form-group">
+                                    <strong>
+                                      <label for="days_for_seedling">Number of Days for Seedling:</label>
+                                    </strong>
+                                    <input type="text" name="days_for_seedling" class="form-control"
+                                      placeholder="Seedling Days" required />
+                                  </div>
+                                  <div class="col-md-6 form-group">
+                                    <strong>
+                                      <label for="days_for_harvesting">Number of Days for Harvesting:</label>
+                                    </strong>
+                                    <input type="text" name="days_for_harvesting" class="form-control"
+                                      placeholder="Harvesting Days" required />
+                                  </div>
+                                  <div class="col-md-6 form-group text-center">
+                                    <strong>
+                                      <label for="is_modified">Is the used Seed Genetically Modified?</label>
+                                    </strong>
+                                    <div class="custom-control custom-switch">
+                                      <input type="checkbox" class="custom-control-input" id="is_modified"
+                                        name="is_modified" />
+                                      <label class="custom-control-label" for="is_modified">Yes</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6 form-group text-center">
+                                    <strong>
+                                      <label for="has_quality_assurance">Does Seed have any Quality Assurance
+                                        Document?</label>
+                                    </strong>
+                                    <div class="custom-control custom-switch">
+                                      <input type="checkbox" class="custom-control-input" id="has_quality_assurance"
+                                        name="has_quality_assurance" />
+                                      <label class="custom-control-label" for="has_quality_assurance">Yes</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6 doc-upload">
+                                <strong>
+                                  <label for="assurance_doc_url">Choose Assurance Document:</label>
+                                </strong>
+                                <div class="custom-file text-left">
+                                  <input id="docUpload" type="file" class="custom-file-input" />
+                                  <label class="custom-file-label">Choose Document</label>
+                                </div>
+                              </div>
+                              <!-- <div class="col-md-6 form-group doc-upload">
+                                <strong> <label for="assurance_doc_url">Document Url:</label> </strong> -->
+                              <input type="text" name="assurance_doc_url" class="form-control" style="display: none;"
+                                placeholder="Document Url will show up here once uploaded" disabled />
+                              <!-- </div> -->
+                              <div class="col-md-6 row form-group" id="assurance"></div>
+                              <div class="col-md-12 form-group">
+                                <strong> <label for="comment">Comment:</label></strong>
+                                <textarea type="text" name="comment" rows="2" class="form-control"
+                                  placeholder="Comment"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <button class="btn" type="button" data-toggle="collapse" data-target="#activityDetails"
+                          aria-expanded="true" aria-controls="activityDetails">
+                          <div class="card-header">
+                            <div class="row">
+                              <div class="col-md-10 text-left">
+                                <h4>
+                                  Activity Details
+                                </h4>
+                              </div>
+                              <div class="col-md-2 text-right">
+                                <i class="fa fa-2x fa-caret-down"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                        <div id="activityDetails" class="collapse show">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="accordion col-md-12">
+                                <div class="form-group">
+                                  <div id="" class="container">
+                                    <ul class="nav nav-tabs text-center">
+                                      <li id="seedlingPrepContent" class="active activity-details info-farmer ">
+                                        <a href="#infoSeedlingPrep" data-toggle="tab">
+                                          <h4>Seedling<br>Preparation</h4>
+                                        </a>
+                                      </li>
+                                      <li id="seedlingTransContent" class="activity-details info-farmer ">
+                                        <a href="#infoSeedlingTrans" data-toggle="tab">
+                                          <h4>
+                                            Seedling<br>Transplantation
+                                          </h4>
+                                        </a>
+                                      </li>
+                                      <li id="inspectionContent" class="activity-details info-farmer ">
+                                        <a href="#infoInspection" data-toggle="tab">
+                                          <h4>
+                                            Inspection
+                                          </h4>
+                                        </a>
+                                      </li>
+                                      <li id="uploadContent" class="activity-details info-farmer">
+                                        <a href="#infoUpload" data-toggle="tab">
+                                          <h4>
+                                            Upload Plant<br>Image Every<br>15 Days
+                                          </h4>
+                                        </a>
+                                      </li>
+                                      <li id="harvestingContent" class="activity-details info-farmer ">
+                                        <a href="#infoHarvesting" data-toggle="tab">
+                                          <h4>
+                                            Harvesting
+                                          </h4>
+                                        </a>
+                                      </li>
+                                      <li id="storageContent" class="activity-details info-distributor">
+                                        <a href="#infoStorage" data-toggle="tab">
+                                          <h4>
+                                            Storage &<br>Processing
+                                          </h4>
+                                        </a>
+                                      </li>
+                                      <li id="commentContent" class="activity-details">
+                                        <a href="#infoComment" data-toggle="tab">
+                                          <h4>
+                                            Comments<br><i class="badge badge-pill badge-outline-danger" id="badge"
+                                              style="margin-left: 1px; opacity: 0;">New</i>
+                                          </h4>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                      <div class="tab-pane active info-farmer" id="infoSeedlingPrep">
+                                        <div class="card">
+                                          <div class="card-body row">
+                                            <div class="col-md-12 form-group">
+                                              <strong>
+                                                <label for="additives_used">Did you treat your seed with
+                                                  additives/pesticides?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="additives_used"
+                                                  name="additives_used" />
+                                                <label class="custom-control-label" for="additives_used">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-12 additive">
+                                              <strong>
+                                                <label>
+                                                  If you have used additives/pesticides upload an image of
+                                                  additives/pesticides used
+                                                </label>
+                                              </strong>
+                                            </div>
+                                            <div class="col-md-4 additive">
+                                              <strong>
+                                                <label for="additive_image_url">Choose Image of Additive:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="additiveUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group additive">
+                                              <strong>
+                                                <label for="additive_image_url">Additive Image Url:</label>
+                                              </strong>
+                                              <input type="text" name="additive_image_url" class="form-control"
+                                                placeholder="Additive Image Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="additive"></div>
+                                            <div class="col-md-12 form-group">
+                                              <strong>
+                                                <label for="seedling_yourself">Did you prepare your seedling?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="seedling_yourself" name="seedling_yourself" />
+                                                <label class="custom-control-label" for="seedling_yourself">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-12 purchase">
+                                              <strong>
+                                                <label>
+                                                  If you didn't prepare seedling and bought from somewhere
+                                                  else please upload purchase bill
+                                                </label>
+                                              </strong>
+                                            </div>
+                                            <div class="col-md-4 purchase">
+                                              <strong>
+                                                <label for="seedling_purchase_receipt_url">Upload image of purchase
+                                                  bill:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="purchaseUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group purchase">
+                                              <strong>
+                                                <label for="seedling_purchase_receipt_url">Purchase Receipt
+                                                  Url:</label>
+                                              </strong>
+                                              <input type="text" name="seedling_purchase_receipt_url"
+                                                class="form-control"
+                                                placeholder="Purchase Receipt Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="purchase"></div>
+                                            <div class="col-md-4 seedling-upload">
+                                              <strong>
+                                                <label for="seedling_image_url">Upload images of seedling:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="seedlingUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group seedling-upload">
+                                              <strong>
+                                                <label for="seedling_image_url">Seedling Image Url:</label>
+                                              </strong>
+                                              <input type="text" name="seedling_image_url" class="form-control"
+                                                placeholder="Seedling Image Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="seedling"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane info-farmer" id="infoSeedlingTrans">
+                                        <div class="card">
+                                          <div class="card-body row">
+                                            <div class="col-md-12 form-group">
+                                              <strong>
+                                                <label for="seedling_transplanted">Did you transplant your
+                                                  seedlings?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="seedling_transplanted" name="seedling_transplanted" />
+                                                <label class="custom-control-label"
+                                                  for="seedling_transplanted">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 transplant">
+                                              <strong>
+                                                <label for="seedling_transplant_image_url">Upload images of
+                                                  transplant:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="transplantUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group transplant">
+                                              <strong>
+                                                <label for="seedling_transplant_image_url">Transplantation Image
+                                                  Url:</label>
+                                              </strong>
+                                              <input type="text" name="seedling_transplant_image_url"
+                                                class="form-control"
+                                                placeholder="Transplantation Image Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="transplant"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane info-farmer" id="infoInspection">
+                                        <div class="card">
+                                          <div class="card-body row">
+                                            <div class="col-md-12 form-group">
+                                              <strong>
+                                                <label for="fertilizer_added">Did you add fertilizer to plant?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="fertilizer_added" name="fertilizer_added" />
+                                                <label class="custom-control-label" for="fertilizer_added">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 fertilizer">
+                                              <strong>
+                                                <label for="fertilizer_image_url">Upload images of fertilizer:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="fertilizerUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group fertilizer">
+                                              <strong>
+                                                <label for="fertilizer_image_url">Fertilizer Image Url:</label>
+                                              </strong>
+                                              <input type="text" name="fertilizer_image_url" class="form-control"
+                                                placeholder="Fertilizer Image Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="fertilizer"></div>
+                                            <div class="col-md-12 form-group">
+                                              <strong>
+                                                <label for="is_plant_infected">Is the plant infected/infested by
+                                                  pests?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="is_plant_infected" name="is_plant_infected" />
+                                                <label class="custom-control-label" for="is_plant_infected">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-12 form-group pesticide">
+                                              <strong>
+                                                <label for="pesticide_added">Did you add Pesticide?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="pesticide_added"
+                                                  name="pesticide_added" />
+                                                <label class="custom-control-label" for="pesticide_added">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 pesticide-upload">
+                                              <strong>
+                                                <label for="pesticide_image_url">Upload images of pesticide:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="pesticideUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group pesticide-upload">
+                                              <strong>
+                                                <label for="pesticide_image_url">Pesticide Image Url:</label>
+                                              </strong>
+                                              <input type="text" name="pesticide_image_url" class="form-control"
+                                                placeholder="Pesticide Image Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="pesticide"></div>
+                                            <div class="col-md-4 form-group text-center">
+                                              <strong>
+                                                <label for="untreated_human_sewage">Did you use untreated human
+                                                  sewage?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="untreated_human_sewage" name="untreated_human_sewage" />
+                                                <label class="custom-control-label"
+                                                  for="untreated_human_sewage">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 form-group text-center">
+                                              <strong>
+                                                <label for="water_tested">Did you test water for
+                                                  contaimnation?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="water_tested"
+                                                  name="water_tested" />
+                                                <label class="custom-control-label" for="water_tested">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 form-group text-center">
+                                              <strong>
+                                                <label for="sewage_water_used">Did you use sewage water during
+                                                  production?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="sewage_water_used" name="sewage_water_used" />
+                                                <label class="custom-control-label" for="sewage_water_used">Yes</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane info-farmer" id="infoUpload">
+                                        <div class="card">
+                                          <div class="card-body row">
+                                            <div class="col-md-4 plant-upload">
+                                              <strong>
+                                                <label for="plant_image_url">Upload images every 15 days:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="plantUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group plant-upload">
+                                              <strong>
+                                                <label for="plant_image_url">Plant Image Url:</label>
+                                              </strong>
+                                              <input type="text" name="plant_image_url" class="form-control"
+                                                placeholder="Plant Image Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="plantImage"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane info-farmer" id="infoHarvesting">
+                                        <div class="card">
+                                          <div class="card-body row">
+                                            <div class="col-md-12 form-group">
+                                              <strong>
+                                                <label for="is_harvested">Did you harvest?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="is_harvested"
+                                                  name="is_harvested" />
+                                                <label class="custom-control-label" for="is_harvested">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 harvest">
+                                              <strong>
+                                                <label for="harvested_image_url">Upload images of harvest:</label>
+                                              </strong>
+                                              <div class="custom-file text-left">
+                                                <input id="harvestUpload" type="file" class="custom-file-input"
+                                                  multiple />
+                                                <label class="custom-file-label">Choose Image</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-8 form-group harvest">
+                                              <strong>
+                                                <label for="harvested_image_url">Harvest Image Url:</label>
+                                              </strong>
+                                              <input type="text" name="harvested_image_url" class="form-control"
+                                                placeholder="Harvest Image Url will show up here once uploaded"
+                                                disabled />
+                                            </div>
+                                            <div class="col-md-6 form-group harvest">
+                                              <strong>
+                                                <label for="is_contaminated">Is the product contaminated?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="is_contaminated"
+                                                  name="is_contaminated" />
+                                                <label class="custom-control-label" for="is_contaminated">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 form-group harvest">
+                                              <strong>
+                                                <label for="is_contaminated_isolated">Did you isolate the contaminated
+                                                  product?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="is_contaminated_isolated" name="is_contaminated_isolated" />
+                                                <label class="custom-control-label"
+                                                  for="is_contaminated_isolated">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-12 row form-group" id="harvestImg"></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane info-distributor" id="infoStorage">
+                                        <div class="card">
+                                          <div class="card-body row">
+                                            <div class="col-md-6 form-group">
+                                              <strong>
+                                                <label for="product_collected">Did you collect the product?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="product_collected" name="product_collected" />
+                                                <label class="custom-control-label" for="product_collected">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                              <strong>
+                                                <label for="chemicals_or_waxes_used">Did you use any chemicals and
+                                                  waxes
+                                                  for
+                                                  post-harvest?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="chemicals_or_waxes_used" name="chemicals_or_waxes_used" />
+                                                <label class="custom-control-label"
+                                                  for="chemicals_or_waxes_used">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                              <strong>
+                                                <label for="product_washed">Did you wash and clean the product?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="product_washed"
+                                                  name="product_washed" />
+                                                <label class="custom-control-label" for="product_washed">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                              <strong>
+                                                <label for="sewage_water_post_harvest_used">Did you use sewage water
+                                                  for
+                                                  post-harvest handling?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="sewage_water_post_harvest_used"
+                                                  name="sewage_water_post_harvest_used" />
+                                                <label class="custom-control-label"
+                                                  for="sewage_water_post_harvest_used">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                              <strong>
+                                                <label for="is_product_contaminated">Is the product contaminated?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="is_product_contaminated" name="is_product_contaminated" />
+                                                <label class="custom-control-label"
+                                                  for="is_product_contaminated">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                              <strong>
+                                                <label for="is_product_contaminated_isolated">Did you isolate the
+                                                  contaminated
+                                                  product?</label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="is_product_contaminated_isolated"
+                                                  name="is_product_contaminated_isolated" />
+                                                <label class="custom-control-label"
+                                                  for="is_product_contaminated_isolated">Yes</label>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6 form-group">
+                                              <strong>
+                                                <label for="is_product_packaged">Is the product packaged?
+                                                </label>
+                                              </strong>
+                                              <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input"
+                                                  id="is_product_packaged" name="is_product_packaged" />
+                                                <label class="custom-control-label"
+                                                  for="is_product_packaged">Yes</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="tab-pane row" id="infoComment">
+                                        <div class="alert alert-warning">
+                                          <h3>No Comments Yet</h3>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card post-comment">
+                        <button class="btn" type="button" data-toggle="collapse" data-target="#commentSection"
+                          aria-expanded="true" aria-controls="commentSection">
+                          <div class="card-header">
+                            <div class="row">
+                              <div class="col-md-10 text-left">
+                                <h4>
+                                  Comment Section
+                                </h4>
+                              </div>
+                              <div class="col-md-2 text-right">
+                                <i class="fa fa-2x fa-caret-down"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                        <div id="commentSection" class="collapse show">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-md-4 form-group">
+                                <strong> <label>Choose Stage:</label></strong>
+                                <select class="form-control" id="chooseStage">
+                                  <option></option>
+                                  <option value="preparation">Seedling Preparation</option>
+                                  <option value="transplantation">Seedling Transplantation</option>
+                                  <option value="inspection">Inspection</option>
+                                  <option value="harvesting">Harvesting</option>
+                                  <option value="processing">Storage & Processing</option>
+                                </select>
+                              </div>
+                              <div class="col-md-8 form-group">
+                                <strong> <label>What would you like to comment on?</label></strong>
+                                <select class="form-control" id="chooseQuestion">
+                                  <option></option>
+                                </select>
+                              </div>
+                              <div class="col-md-12 form-group">
+                                <strong> <label for="comment">Your Comment:</label></strong>
+                                <textarea id="adminComment" type="text" rows="2" class="form-control"
+                                  placeholder="What would you like to comment?"></textarea>
+                              </div>
+                              <div class="col-md-3 form-group">
+                                <button type="button" id="btnPost" class="btn btn-primary">
+                                  Post Comment
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-12 col-md-offset-2 text-right">
+                          <button class="btn btn-secondary btn-md" id="btnGoBack" type="button">
+                            Go Back
+                          </button>
+                          <button class="btn btn-primary btn-md" type="submit">Submit</button>
+                        </div>
+                      </div>
+                  </div>
+                  </form>
+                </div>
+                <div class="ibox" id="task_list" style="display: block;">
+                  <div class="ibox-title">
+                    <label>
+                      <h2>Task List</h2>
+                    </label>
+                    <button type="button" class="btn btn-sm btn-primary" id="btnAddTask" style="float: right;">
+                      Add Task
+                    </button>
+                  </div>
+                  <div class="ibox-content">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <table id='task-table' class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Description</th>
+                              <th>Completed?</th>
+                            </tr>
+                          </thead>
+                          <tbody id="taskView"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="farmerContent">
+            <div class="ibox">
+              <div class="ibox-content">
+                <div class="row" id="farmerAssign">
+                  <div class="col-md-12 row text-center form-group">
+                    <div class="col-md-10">
+                      <select name=" farmer_id" id="farmer_id">
+                        <option></option>
+                      </select>
+                      <button class="btn btn-primary" id="btnAssignFarmer">Assign </button>
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-primary" id="btnAddFarmer"><i class="fa fa-plus-circle"></i>&nbsp;Add
+                        Farmer</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="distributorContent">
+            <div class="ibox">
+              <div class="ibox-content">
+                <div class="row" id="distributorAssign">
+                  <div class="col-md-12 row text-center form-group">
+                    <div class="col-md-10">
+                      <select name=" distributor_id" id="distributor_id">
+                        <option></option>
+                      </select>
+                      <button class="btn btn-primary" id="btnAssignDistributor">Assign </button>
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-primary" id="btnAddDistributor"><i class="fa fa-plus-circle"></i>&nbsp;Add
+                        <small>Distributor</small></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <% include ../_layouts/foot %>
+  <script src="/js/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+  <script src="/js/app/seed.details.js"></script>
+</body>
+
+</html>
+<template id="tmpPrep">
+  <option value="comment_on_additive">Did you treat your seed with additives/pesticides?</option>
+  <option value="comment_on_prepare_seedling">Did you prepare your seedling?</option>
+</template>
+<template id="tmpTrans">
+  <option value="comment_on_transplant">Did you transplant your seedlings?</option>
+</template>
+<template id="tmpInspect">
+  <option value="comment_on_fertilizer">Did you add fertilizer? </option>
+  <option value="comment_on_pests">Is the plant infected/infested by pests?</option>
+  <option value="comment_on_pesticide">Did you add pestcide?</option>
+  <option value="comment_on_untreated_human_sewage">Did you use untreated human sewage?</option>
+  <option value="comment_on_water_contamination">Did you test water for contaimnation?</option>
+  <option value="comment_on_sewage_water_use">Did you use sewage water during production?</option>
+</template>
+<template id="tmpHarvest">
+  <option value="comment_on_harvest">Did you harvest the fruit?</option>
+  <option value="comment_on_contaminated">Is the product contaminated?</option>
+  <option value="comment_on_contaminated_isolated">Did you isolate the contaminated product?</option>
+</template>
+<template id="tmpProcess">
+  <option value="comment_on_collect">Did you collect product?</option>
+  <option value="comment_on_chemicals">Did you use any chemicals and waxes for post-harvest?</option>
+  <option value="comment_on_cleaning">Did you wash and clean the product?</option>
+  <option value="comment_on_sewage_water_handling">Did you use sewage water for post-harvest handling?</option>
+  <option value="comment_on_product_contaminated">Was the product contaminated?</option>
+  <option value="comment_on_product_contaminated_isolated">Did you isolate the product that was contaminated?</option>
+  <option value="comment_on_packaging">Is the product packaged?</option>
+</template>
+
+<div id="mdlTaskAdd" class="modal fade" role="dialog" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Task</h4>
+      </div>
+      <form id="frmTask">
+        <div class="modal-body">
+          <div class="row">
+            <input hidden id="batchId">
+            <div class="col-md-6 form-group">
+              <strong> <label for="batchNo">Batch Number:</label></strong>
+              <input class="form-control" id="batchNo" disabled>
+            </div>
+            <div class="col-md-6 form-group">
+            </div>
+            <div class="col-md-6 form-group">
+              <strong> <label for="cropName">Crop Name:</label></strong>
+              <input class="form-control" id="cropName" disabled>
+            </div>
+            <div class="col-md-6 form-group">
+              <strong> <label for="cropVariety">Crop Variety:</label></strong>
+              <input class="form-control" id="cropVariety" disabled>
+            </div>
+            <div class="col-md-12 form-group">
+              <strong> <label for="task">Task:</label></strong>
+              <input class="form-control" name="task">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-submit" id="btnSubmitTask">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
