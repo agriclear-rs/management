@@ -24,6 +24,6 @@ To start this software - run Ganache then perform the following actions:
 
 
 
-## Soding Style Tests
+## Coding Style Tests
 
 This repository uses eslint to enforce air-bnb coding styles.   
